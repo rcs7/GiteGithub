@@ -1,0 +1,695 @@
+//No windows!
+
+//DESCOBRIR QUE ERRO É ESSE QUE APARECE QD EU VOU FAZER UM GIT ADD:
+//warning: LF will be replaced by CRLF in bar.
+//The file will have its original line endings in your working directory
+
+
+//usar o Git Bash , ou seja, botão iniciar Git Bash.
+
+prompt de comando em C->Usuários->Dell que é a MINGW64
+
+git config -- global user.name "Renata Cristovam"
+
+git config --global user.email "rcs7@cin.ufpe.br"
+
+//conf o editor
+git config --global core.editor notpad++
+git config --global core.editor s
+git config --global core.editor vim  //eh a opção default
+git config --global core.editor vi
+git config --global core.editor emacs
+
+git config user.name
+git config user.email
+git config --list
+
+//criando pasta
+mkdir git-course//esse era o de antigamente, mas qd fui testar criei a pasta git-testando
+mkdir git-testando
+
+cd git-testando //windows e mac
+dir git-testando //linux
+
+//inicializa o repositório e enxerga todas as mudanças
+git init //é criado uma pasta chamada .git dentro da 
+//pasta git-testando
+
+//mostra os inits
+ls -la
+
+cd .git
+ls
+cd.. // volta uma pasta no diretório
+
+//editor vim ou vi tanto faz o nome
+vi Readme.md //abre o arquivo que está sendo criado Readme.md no vi
+
+//após entrar no arquivo de tela preta pra escrever que é o vim ou vi
+i //está agr no modo de inserção
+//copie git e aperte 
+tecla esc //sai do modo de inserção
+shift  +  ;(que é :) //indica que vou iniciar um comando
+wq // escrever e salva  e sair
+enter
+
+ls   // vejo que já tenho o arquivo Readme.md
+vi Readme.md
+i
+//Escrevo
+Arquivo da aula de GitHub para iniciantes
+tecla esc //sai do modo de inserção
+chift  +  ; //indica que vou iniciar um comando
+wq // escrever e salva  e sair
+enter
+
+//untracked - (add no repositório, mas não visto pelo Git);
+//unmodified - (add no Git(existe no Git), mas não foi modificado);
+//modified - vc modificou o arquivo
+//staged - área que será criada a versão, momento em que o 
+//arquivo vai ficar lá avisando, olha o momento que a versão for 
+//fechada leve esses arquivos;
+//unmodified - qd der o commit o estado volta a ser unmodified.
+
+ls 
+
+// Primeiro comando que vou aprender no Git:
+git status  //o arq Readme.md está untracked e diz pra usar git add to track.
+vi Readme.md
+i
+//Escrevo
+ok
+tecla esc //sai do modo de inserção
+shift  +  ; //indica que vou iniciar um comando
+wq // escrever e salva  e sair
+enter
+
+git status // e agr vai mostrar modified vermelho (untracked)
+git add Readme.md
+git status // modified verde (um arquivo que já pode ser commitado)
+//ele está no stage, já pronto pra ser commitado.
+
+vi Readme.md
+i
+//Escrevo
+adicionando mais coisas
+tecla esc //sai do modo de inserção
+shift  +  ; //indica que vou iniciar um comando
+wq // escrever e salva  e sair
+enter
+git status // para que eu possa comitá-lo preciso usar add de novo
+//pra poder levar as modificações comigo preciso passá-lo pra stage.
+//ele voltou a ser vermelho e modified. E se liga que só posso commitar dps de dá o add.
+
+git add Readme.md
+git status //ele está pronto pra ser commitado
+
+//commit eh o momento que eu vou avisar ao git, olha pegue tds esses
+//arqs do meu repositório e uma imagem dele (snapshot = uma versão)
+git commit -m "Add Readme.md"
+//ele vai mostrar tb um identificador que são alguns números, eles
+//identificam o commit feito.
+
+git status // nda pra ser commitado
+
+//Em resumo, o arq tem que tá no staged pra que ele possa ser commitado
+//caso eu tente o commitar sem usar antes o add sem ele está no staged dá erro
+
+//Visualizando os logs
+git log //commit aReshDoCommit(HEAD->master)
+		//author: Renata Cristovam<rcs7@cin.ufpe.br>
+		//Date: Tue Mar 5 20:26:41 2019 -0300
+		//Add Readme.md
+git log --decorate
+git log --author="Renata Cristovam" // mostra meus commits
+git log --author="Amanda" // não aparece nda pq ela não commitou
+
+git shortlog // autores em ordem alfabética, qts commits e quais
+// é bom pra mensurar a parte de contribuintes.
+//Renata Cristovam (1):
+//	Add Readme.md
+git shortlog -sn // diz o nome da pessoa que fez o commit e a qtd deles
+//1 Renata Cristovam
+git log --graph  //vai criando um gráfico com os commits
+
+git show 2ef8b69136cb2b9504497a873cacf2a5428031dc // essa foi a ref de um commit
+//que peguei. Mostra igual a um git status e tdas as modificações feitas no arquivo
+
+git status // nao tem nenhum commit pra fazer ou editar
+vi Readme.md
+i
+//Escrevo
+coloquei a última linha
+tecla esc //sai do modo de inserção
+shift  +  ; //indica que vou iniciar um comando
+wq // escrever e salva  e sair
+enter
+git status    //modified vermelho, ainda preciso add pra poder commitar
+
+//Use SEMPRE!!!!!!
+git diff // mostra a minha modificação no arquivo. Em verde é a última linha que add no arq
+ 
+git diff --name-only // mostra só o nome do arquivo
+
+git commit -am "Edit Readme" // posso fazer esse commit sem ter que fazer
+// o add antes pq o arquivo já havia sido commitado antes.
+
+git status  //nada pra ser commitado
+git log // terei lá os meus commits, author, data e mensagem que pus no commit.
+git show //mostra td do último commit, que no git log é o commit mais acima.
+
+//Desfazendo as coisas
+git log
+
+//edito o arquivo Readme para que haja modificação e só dps
+git status // tá modified vermelho
+git diff // mostra as mudanças
+//se eu fizer
+git checkout Readme.md //desfaço a última modificação
+
+git diff //vejo que não tenho nenhuma diferença agr
+//ou seja, não aparece nda como retorno.
+
+//de novo edito o arquivo Readme, e agr o add
+git add Readme.md //ele foi pra área de staged
+git status // modified verde, já tô podendo comitar tanto que se
+git diff // não verei mudança mais
+
+git reset HEAD Readme.md // tiro o arquivo da fila do staged(tava só esperando o commit)
+//Unstaged changes after reset:
+//M    Readme.md
+git status //voltou a ser modified vermelho
+
+git diff //volta a mostrar a modificação
+git checout Readme.md //de novo tiro tda a minha mudança
+git status //nda pra fazer
+
+//edito de novo o Readme.md
+git status //modified vermelho
+//já commito direto
+git commit -am "qlq coisa"
+
+git log // tá lá o commit
+
+// como fazer pra voltar o que commitei??????
+// Tenho 3 tipos:
+//Soft - mata só o último commit, mas o arq já vai estar no staged prontinho pra
+//ser commitado; Ou seja, ele fica modified verde.
+//mixed - mata o commit tb, só que volta os meus arquivos pra antes do
+//staged, ou seja pro modified;
+//hard - ignora a existência do commit e td o que aconteceu nele.
+
+git log // e pego a ref do commit a SEGUNDA mais lá de cima que é o PENÚLTIMO que fiz
+// pra eu poder usar para matar o último commit
+
+git reset --soft cb25139f35132b5f14a9100004b3b6dd7951ed31 //essa eh a ref do último commit
+git status //modified verde, que é ainda no stage, já pronto pra ser commitado
+git log //tenho os dois commits ainda e o último é o que usei a resh aí em cima.
+
+git commit -m "commitei de novo"
+git log //tenho novamente 3 commits, o último é o mais de cima!
+
+//pego a ref do commit a SEGUNDA mais lá de cima que é o PENÚLTIMO que fiz
+// pra eu poder usar para matar o último commit
+git reset --mixed cb25139f35132b5f14a9100004b3b6dd7951ed31
+//Unstaged changes after reset:
+//M   Readme.md
+git status // arq no modified vermelho, ou seja, saiu do staged e pra voltar pra lá 
+//preciso add
+git diff // mostra a última mudança feita
+
+//commitando direto sem fazer add , ou seja , usando -am:
+git commit -am "commitando"
+git log// e pego a ref do commit a SEGUNDA mais lá de cima que é o PENÚLTIMO que fiz
+// pra eu poder usar para matar o último commit
+git reset --hard cb25139f35132b5f14a9100004b3b6dd7951ed31 
+//HEAD is now at 763ff92 Edit Readme  
+//ou seja, a cabeça agr é o commit cuja a resh eu passei no reset.
+//Tome cuidado pq isso altera o log do commit, ou seja se vc já tinha dado um push 
+//daquele commit e o resetou com hard, matou o commit e quer subir de novo, o git vai 
+//falar tem uma diferença no que vc tá tentando mandar e o que eu tenho, por favor 
+//atualize, então vc só vai consegui atualizar com o fork. USE COM CUIDADO!
+
+git log // o commit sumiu
+git status // não tem nda pra fazer
+git diff //não tem mudanças, ou seja, não retorna nda!
+
+//SSH é o protocolo remoto que serve pra conectar o usuário remoto ao servidor
+//ele é baseado em chaves onde existe uma chave pública e uma chave privada,
+//onde a chave privada consegue abrir a chave pública. Ou seja, a gnt envia a 
+//chave pública para o servidor(GitHub)e com a nossa chave privada dentro do nosso 
+//computador a gnt é capaz de abrir a chave pública do servidor e é capaz de
+//subir o nosso código.
+//Preciso gerar a chave ssh e dps add essa chave no GitHub
+//clico neste link
+//https://help.github.com/articles/connecting-to-github-with-ssh/
+//primeiro clico em gerar a SSH
+//Paste the text below, substituting in your GitHub email address.
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com", no meu caso é
+ssh-keygen -t rsa -b 4096 -C "rcs7@cin.ufpe.br"
+//This creates a new ssh key, using the provided email as a label.
+//Generating public/private rsa key pair.
+//When you're prompted to "Enter a file in which to save the key," press Enter. 
+//This accepts the default file location.
+// Enter a file in which to save the key (/c/Users/you/.ssh/id_rsa):[Press enter]
+//At the prompt, type a secure passphrase. For more information, see "Working with 
+//SSH key passphrases".
+//Enter passphrase (empty for no passphrase): [Type a passphrase]
+//Enter same passphrase again: [Type passphrase again]
+
+//Indo até as chaves que ficam dentro da nossa home:
+cd ~/.ssh 
+ls // vamos ter id_rsa   id_rsa.public/private
+//a chave que vou colocar no meu GitHub é a .pub:
+cat id_rsa.pub   // é o comando pra aparecer toda a chave pública pra eu copiar Ctrl+C
+//ou
+more id_rsa.pub // é a mesma coisa do cat, NA MINHA MÁQ NÂO TEM.
+//ou posso abrir a chave no meu editor de texto, por ex o vi
+vi id_rsa.pub
+
+//copiada a chave , vou la no sit do GitHub e clico lá na direita em cima na setinha e 
+//vou em settings
+// e dps clico na opção SSH and GPG Keys
+// lá tenho as chaves que eu posso adicionar. Clico em New SSH key
+//colo a chave que eu havia copiado na parte key e o título posso escrever o nome da máq Dell...
+//Eu escolhi git testando pq é nessa pasta que estou trabalhando. 
+//e dps clico em add! Lembrando que minha senha do gitHub é Blind1992. Pois, pra add a chave ele pede.
+//PRONTO! Agr posso usar o GitHub e dá push sem dá erro nenhum.
+
+cd .. //volto na pasta
+cd git-testando //entro na pasta e lá
+// tem que aparecer do lado que estamos no master!
+
+//agr vamos ligar o repositório local ao repositório do GitHub
+//posso criar um repositório em uma linha de comando como ele ensina na pág: 
+create a new repository on the command line:
+or create a new repository on the command line
+echo "# github-testando" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/rcs7/github-testando.git
+git push -u origin master
+
+//fui lá no github e criei o respositório no + lá de cima na direita.
+
+//mas vamos escolher a segunda opção:
+//push an existing repository from the command line
+git remote add origin https://github.com/rcs7/github-testando.git
+git remote //vê que tem "origin"
+git remote -v //diz mais informações // origin endereçoDele
+git push -u origin master // origin(para onde vai) master(de onde vem) via os 
+//arquivos que tenho, logs e todas as modificações
+//para o repositório que eu estou determinando. 
+//O -u serve só pra eu traquear, ou seja, no próximo eu só digito git push
+//ele comprime os arquivos, escreve as modificações que eu preciso e envia para o GitHub
+
+vim Readme.md
+i
+//escrevo qlq coisa
+esc
+:wq enter
+git status
+git commit -am "Add qlq coisa"
+git log
+//interessante que no segundo commit aparece do lado(origin/master), ou seja,
+//daí pra baixo tá lá no servidor do github, mas o último commit que fiz que é
+//o primeiro não está lá. Nesse primeiro commit só tem do lado(HEAD->master).
+//sendo que no gitHub ele não vê esse commit pq eu ainda não fiz um push da minha
+//modificação para o meu repositório, então para fazer isso:
+git push origin master
+//vou no gitHub e dou um refrash(F5), vai ter escrito lá qts commits foram feitos
+//e este vai estar incluso e se eu clicar nele aparece informações sobre.
+
+//git clone : permite clonar todo o repositório pra a minha máquina local
+//o git libera para vc tanto o SSH qt HTTPS. Eu posso copiar o SSH
+//que foi: https://github.com/rcs7/github-testando.git
+//saiu do repositório e vou clonar esse repositório com outro nome
+//tenho que está fora do master
+cd ..
+git clone https://github.com/rcs7/github-testando.git github-clone
+//se eu fizer que nem o professor:
+g clone https://github.com/rcs7/github-course.git github-couse-clone //dá erro! é git e não g!!!
+
+//abro a pasta para vê
+cd github-testando-clone
+ls //vejo o Readme.md dentro
+vi Readme.md
+esc
+:wq
+enter
+
+//fork - pega um projeto que não é seu e faz uma cópia dele pra vc.
+//quero ajudar a contribuir em um repositório.
+//faço um fork, copio o projeto pra mim, faço as mudanças e dps envio 
+//um pull request para a pessoa
+//avisando a correção e a mudança que eu fiz.
+
+//pra criar um fork é só ir lá na minha pág no github e clicar em fork, lá em cima no 
+//canto direito(não pode ser o meu repositório) e aí ele abre as opções, pra onde vc 
+//quer fazer a cópia. Se eu tivesse outras organizações além do meu próprio repositório 
+//eu escolheria ela e conseguiria fazer um fork do meu próprio projeto. Enfim , ele 
+//escolheu outra organização e aí ele faz a cópia toda.
+
+//Fica lá no meu, mas dizendo que ele foi forkado de tal organização no clone eu só 
+//consigo fazer para os repositórios que são meus de fato e que dps eu quero mandar 
+//essas modificações para o github.
+//Se eu  não for dono eu posso até clonar, mas seu eu fizer alguma modificação eu 
+//não vou conseguir enviar pq o repositório não é meu e então qd eu quero fazer a 
+//modificação em algo que não é meu eu faço um fork e dps subo.
+
+//branch - o que são e como funcionam
+//branch - é um  ponteiro móvel que leva a um commit
+//lembrando que smp que a gnt faz um commit ele gera pra gnt um hash e para cada uma
+//ele tira uma snapshot.
+//branch - aponta para o commit. Ao começar um repositório o primeiro branch que temos é 
+//o master e cada vez que fazemos o commit ele segue os commits(fica no último).
+//Posso criar um novo branch e ele pode apontar para um novo commit ou para um novo qlq.
+//Por que usar ? Vantagens - posso modificar os meus arquivos sem alterar o meu branch 
+//principal , ou seja , o meu master.
+//Posso corrigir um bug, enquanto tem outras pessoas trabalhando no meu branch principal. 
+//É facilmete desligável, é veloz.
+//Escreve um arq de 41 Bytes. Múltiplas pessoas podem trabalhar em diferentes branches 
+//sem ninguém atrapalhar ninguém.
+//Ele evita conflitos. Se todo mundo tiver trabalhando  no msm branch, eu posso fazer um 
+//commit e um monte de pessoas fazer ao mesmo tempo, aí eu preciso realinhar esses 
+//commits, históricos, pra poder suber e não tem conflito nenhum.
+//Se tiver vários branchs, eu trabalho no meu e subo meu commit e aí mesclo com o branch 
+//master e não tem problema nenhum.
+
+//craindo um branch
+git checkout -b branchTeste // já cria e já entra no branch pra mim
+git branch // mostra os branchs que tem e o que vc está no momento fica com um * colado com 
+//o nome. Apareceu branchTeste e master.
+
+git checkout //diz o branch que eu estou
+git branch // diz o nome dos branchs que existem
+git checkout branchTeste //coloca o branch que estamos no branchTeste. Então, diz que já está
+//no branchTeste.
+git checkout master //coloca o branch master pra ser o atual.
+
+//apagar um branch que não quero mais usar é só digitar 
+git branch -D branchTeste //branchTeste é o nome que eu coloquei no branch q eu criei
+git branch // vai dizer que só tenho o branch master
+git checkout // diz que eu estou no branch master
+
+//Entendendo o merge
+//passando as modificações do branch que eu estaria trabalhando para o meu branch principal
+//Unindo branches: Merge e o rebase
+//Merge:  
+//master e outro branch q crio, os dois estão no msm lugar do master;
+//qd dou um outro commit o master fica onde tva e o meu branch aponta para o novo commit
+//crio um novo commit dentro do branch master como o master está num lugar o novo brach 
+//fica em cima do novo commit.
+//Já estou criando uma ramificação master , outro branch e outro branch.
+//Pra juntar os commits eu tenho que criar um commit novo que vai juntar todas as 
+//modificações. Esse commit novo criou um ciclo(forma diamante)
+//Pros e contras
+//Pros: o merge é uma ação não destrutiva, ou seja, não destrói commit e sim cria pra 
+//juntar td, ou seja, não destrói o histórico.
+//Contra: preciso de commit extra. Ele não tem mt sentido pq não tá fazendo nda, não 
+//criando arquivo novo, não tá juntando código.
+//Contra: O merge deixa o histórico poluído, pois ele cria árvore juntando os meus 
+//commits num commit só. Criando um ciclo em forma de diamante.
+//Fica um pouco complicado de entender se eu tiver vários branches, ou seja, 
+//histórico poluído.
+
+//Entendendo o Rebase
+//Rebase - é mais simples que o merge.
+//Um ex: Tenho um branch master e um outro branch em outro lugar. O Rebase pega esse 
+//outro commit e joga pra frente e aí ele aponta pra esse commit e esse commit aponta pra 
+//o commit para o ql o master está apontando.
+// Deixando td linear. E mata o commit para o qual o outro branch apontava anteriomente. 
+//Ou seja, ele pega td o que tinha no branch separado e coloca no início da fila.
+// Então, tanto o master qt o outro commit estao apontando para o msm commit.
+//Pro: Evita commits extras; Histórico linear.
+//Contra: Perco a ordem cronológica. Pq eu pego smp o commit e coloco na frente da fila. 
+//Mudo o histórico, cuidado!
+// Use o Rebase smp que vc for dar pull das atualizações
+//git pull --rebase
+
+
+//Prática
+cd .. //pra sair da pasta clonada que eu tva se eu tiver entrado mesmo!
+//Primeiro crio uma pasta chamada rebase-merge
+mkdir rebase-merge-testando
+cd rebase-merge-testando
+git init // primeiro inicializo o repositório criando o .git dentro da pasta
+// Crio um arquivo chamado foo
+vim foo
+i
+//escrevo:
+foo
+esc
+:wq enter
+git status //arquivo em Untracked, não está pronto pra ser commitado, 
+//precisa ser add antes.
+git add foo
+git commit -m "add foo" // primeiro commit no branch master
+//crio um novo branch:
+git checkout -b test
+//crio um arquivo chado bar
+vim bar
+i
+//escrevo bar nele
+bar
+esc
+:wq enter
+
+git status // untracked
+git add bar
+git commit -m "Add bar"
+git log // tenho 2 commits: 1 que é do master, q chama-se foo e 1 do branch novo que é o bar
+//logo o test será o branch do commit mais acima
+
+//se eu retornar lá pro master
+git checkout master
+git log // vai só aparecer 1 commit que é o master que foi o do foo
+//ou seja, não aparece mas o branch test que é o que estava no último commit
+//que foi o do bar
+//mas se eu digitar 
+git branch // aparece que tenho o master e o test
+//crio um arq chamado fizz e escrevo fizz nele
+git add fizz
+git commit -m "Add fizz"
+git log // obs que tenho os commits do fizz e do foo, mas não tenho o bar que deveria 
+//estar no meio dos dois pela lógica. E outra o master subiu pra o último commit que 
+//foi o do fiz e o commit do foo ficou sem branch e o test continua sumido junto com o bar.
+git merge test //dá erro e pede pra eu commitar o bar. Eu vou e commito.
+//fatal: You have not concluded your merge (MERGE_HEAD exists).
+//Please, commit your changes before you merge.
+git commit -m "Add bar"
+git log //agr aparece o bar anterior e esse bar de agr:
+//bar(master)
+//fizz
+//bar(test)
+//foo
+git merge test 
+git log --graph:
+// aí fica:
+*commit bar HEAD->master
+|\
+| *commit bar (test)
+| |
+* | commit fizz
+|/
+*commit foo 
+//foi um histórico linear
+
+
+//Rebase
+//tô no master
+vim buzz 
+//e escrevo buzz nele
+git add buzz
+git commit -m "Add buzz"
+git log // vejo que tenho agr tb esse commit que é o primeiro e master
+git checkout -b rebase-branch-testando
+git log // master e rebase-branch-testando estão apontando pro mesmo lugar(commit do buzz)
+vim bla
+//escrevo bla
+git add bla
+git commit -m "Add bla"
+git log // o branch rebase-branch ficou nesse último commit bla e o master continuou no buzz
+git log --graph // percebo que estou linear por enquanto
+* bla (HEAD->rebase-brach-testando)
+|
+* buzz (master)
+|
+* bar
+|\
+| |
+| * bar (test)
+* | fiz
+|/ 
+|
+* foo
+
+git checkout master // para ir pra master 
+git log // o rebase-branch-testando que tva lá em cima some
+git branch //mostra que o rebase-branch-testando ainda existe
+
+//DESCOBRIR QUE ERRO QUE EH Esse
+/*
+ git add seila
+warning: LF will be replaced by CRLF in seila.
+The file will have its original line endings in your working directory
+*/
+
+vim seila 
+//escrevo seila
+git add seila
+git commit -m "Add seila"
+git log //tenho esse commit acima e dps o do buzz, mas era pra eu ter aquele do rebase-branch-test no meio deles
+//obs que o master está no último commit que é o seila
+//Rebase:
+git rebase rebase-branch-testando //aparece:
+//first, rewinding head to replay your work on top of it...
+//applying:seila
+//tradução:
+//primeiro, rebobinar a cabeça para repetir o seu trabalho em cima dele ...
+//aplicação: seila
+//ou seja, aplicando nossa modificação para o top da lista
+git log // já tenho o seila lá
+git log --graph //mostra:
+* Add seila(master)
+|
+* Add bla (rebase-branch-testando)
+|
+* Add buzz
+|
+* Add bar
+|\
+| |
+| *Add bar(test)
+| |
+* |Add fizz
+|/
+|
+* Add foo
+
+//Então o rebase juntou pra mim todas as coisas e eu não tive que criar um novo ciclo.
+//Colocou o meu commit na ponta do meu repositório branch master e não fez um commit 
+//extra pra juntar e mais em baixo criou 2 níveis, poderia ter criado até um guitarreiro, 
+//por isso não é mt legal ficar criando merges pq eu crio commits e mais commits 
+//desnecessáriose tb crio várias e várias linhas q ficam difícil de ler. Ou seja , 
+//smp use o rebase, mas ser for um caso de pull request use o merge. Para caso de add 
+//de nova feature no final o legal é o merge.
+
+//arq git ignore
+//serve pra ignorar, ou seja não trackear alguns arqs, como senhas dentro do repositório
+//q preciso no ambiente, mas não quero subir, ou tenho alguns arqs que o próprio
+//sistema gera. Gitignore é um arq dentro do nosso repositório que dentro escreve-
+//mos alguns padrões que dizemos pra que eles não utilizem.
+
+//vá no gitbash e digite :
+ls
+e entre na pasta git-testando que está no master
+ls
+crio uns arquivos dentro desta pasta, tipo:
+bar.json e digite bar dentro dele
+db.xls e digite db dentro dele
+foo.json e digite foo dentro dele
+keys.xls e digite keys dentro dele
+
+crio um arquivo .gitignore:
+vi .gitignore
+//dentro desse arquivo eu consigo especificar não só os arqs que eu não quero como tb
+//todas as extensões
+escrevo lá dentro:
+*.json   //ou seja, td o que tem  extensão json
+git status // não aparecem os arqs .json
+vi .gitignore
+// e apagar o *.json e 
+git status // aparecem novamente todos os arqs .json
+Ctrl+l para limpar a tela, que é o msm que clear.
+vi .gitignore
+//escrevo dentro dele:
+db.xls
+git status // o arq db.xls sumiu daq
+//tem tb uma ferramenta a gitignore que ela tem um conj de gitignore para
+//determinados conjs de projeto
+https://github.com/github/gitignore
+//se eu tiver fazendo um projeto em java, ele vai ter lá a lista 
+//dos arqs que eu não preciso, ou seja, já posso copiar um padrãozinho pra colocar no
+//meu gitignore
+
+// git stash: é responsável por guardar modificações que ainda não foram commitadas
+// numa pasta, num arquivinho que eu possa chamar dps qd eu achar necessário
+// edito o meu arquivo Readme.md
+// digito qlq coiisa nele
+git status // ele me mostra a modificação
+//imagine que eu precise rapidinho ir pra um outro branch e eu não quero levar essa 
+//modificação por algum motivo, então eu digito:
+git stash // aparece: Saved working directory and index state WIP on master: 
+//5d99db1 Add qlq coisa
+// ou seja, ele guarda a minha modificação e retorna criando um WIP, ou seja, um estado
+// de eu ainda estou trabalhando WIP(Work In Progress)
+git status    //não aparece aquele arquivo que eu havia mudado
+git stash list // mostra a lista dos stashs que estou fazendo
+// aparece isso:
+//stash@{0}: WIP on master: 5d99db1 Add qlq coisa
+git stash apply // ele aplica as mudanças que havia feito
+//ou seja o arq volta a ser modified verde
+git diff //mostra então as mudanças que eu havia feito
+//ou seja , o git stash apply é a volta(o contrário do git stash)
+git stash clear // limpa todos os stashs que tenho
+
+//Alias = "êilias" - são atalhos dos comandos
+//Ex: se eu for digitar mt git status e quero que seja apenas git s, é simples,
+//é só eu criar um Alias:
+git config --global alias.s status
+//Pronto! Agr se eu digitar git s, o resultado é o do git status
+
+//Versionando Tags - é mais informação do que um commit, é estilo uma marcação
+//git tag -a//anotação(dado) 1.0.0//versão -m//mensagem "Readme finalizado"
+//ou seja:
+git tag -a 1.0.0 -m "Readme.md"
+git tag -a 1.0.1 -m "Readme.md finalizado"   //obs: não aparece nada confirmando nda.
+//para subir as tags criadas:
+git push origin master --tags  //aparecem umas informações
+//aí vou lá no github site e clico em release e lá tem informações sobre essas tag
+//posso até baixar os códigos que eu tva fazendo até o momento em modo zip ou rar
+//no meu caso é o arquivo Readme.md
+ls
+vim Readme.md //para editar o arq
+//escrevo "mais coisas" dentro
+//commito isso
+git commit -am "Update Readme.md"
+//subo isso pro repositório github
+git push origin master 
+git tag -a 1.0.2 -m "add mais coisas"
+git tag //vejo as tags q tenho 1.0.0, 1.0.1 e 1.0.2
+git push origin master --tags //subo isso pro repositório github
+//então se lá no github eu der um refrash (f5) na pág já aparece lá em release
+
+//git revert - falo "uivért"
+vim Readme.md //escrevo lá "mais coisas ainda"
+git commit -am "mais coisas ainda"
+git log //meu commit tá ali e se eu copiar a resh dele e 
+git show f073601ce465245f002c633a805b4e5253108233 //ele mostra o q eu fiz
+git revert f073601ce465245f002c633a805b4e5253108233 // git revert resh(do commit q eu
+//não queria ter feito) // fala lá q o commit foi revertido
+git log // vai aparecer um novo comando de commit, dizendo q houve o revert, mas abaixo
+//ainda estará esse commit anterior. Mas se eu der um git show nesse outro commit
+//da frente. Vejo que as ediçoes q fiz no commit q eu revertir não aparecem mais ]
+//Esse commit estragado ainda aparece no log, pois posso usá-lo, dando um reset
+//ou um checkout pra poder entendê-lo, modificá-lo e aí subi-lo já corrigido.
+
+//Como apagar tag ou branch no meu repositório remoto(github)
+git tag
+git tag -d 1.0.1 //apaguei a tag 1.0.1
+git tag
+git tag -d 1.0.0
+git push origin master --tags  //isso não sobe nda pro github
+//ou seja,apago as tags no repositório da minha máquina, mas não no remoto do github
+//comando q apaga lá no repositório remoto:
+(OBS ESCREVA O COMANDO EXATAMENTE COMO ESTÁ AQ EM RELAÇÃO AOS ESPAÇOS
+PQ SE NÃO, NÃO FUNCIONA)
+git push origin :1.0.0 //dou um refrash(f5) lá na pág do github e vou em relase e 
+//vejo que a tag foi apagada de lá
+git push origin :1.0.1 //dou um refrash(f5) lá na pág do github e vou em relase e 
+//vejo que a tag foi apagada de lá
+
+//o msm eu poderia fazer com o branch, caso eu tivesse e quisesse o apagar do repositório:
+git push origin: NomeDoBranch

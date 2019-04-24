@@ -1,0 +1,78 @@
+Primeiro cenário - controle de versões de um só desenvolvedor. A pasta Local que eu crio , é um single.
+
+working directory -(git add ...)- stage area -(git commit)- git directory
+ 
+git init - cria um repositório na pasta atual. Ou seja, o gitbash tem que estar no caminho da pasta. Se ele não estiver, use o comando cd.
+
+git status - dá o status do seu repositório. Ou seja, o gitbash tem que estar no caminho da pasta. Se ele não estiver, use o comando cd.
+
+Sempre que uso um add , estou fazendo o arquivo sair da working area e o mandando para a stage area. Dps eu preciso confiramar as mudanças no meu projeto.
+git add nomeDoArquivo.txt - add o arquivo para o seu controle de versão.
+
+git add *.txt - add todos os arquivos .txt - obs que pode ser .php etc.
+
+git add . - Insere tudoo, independente do tipo do arquivo.
+
+// salva as mudanças no projeto
+git commit -m "mensagem q identifica o commit"
+
+Qd eu tô trabalhando com os arquivos ou estou editando arquivos já existentes, eu estou no worked directory. Qd estou uso o add estou passando os arquivos para a stage area e qd eu uso o commit estou mandando os arquivos pro repositório. Ou seja, guarde , pois eu acabei td.
+
+Tenho um arquivo e quero iguinorá-lo. Ou seja, msm sem ele sido commitado, ele ainda é visto pelo comando git status e não qureo que isso ocorra. Então, crio um arquivo pelo notepad++ com todos os types de arquivo e o nomeio como .gitignore. Então eu coloco dentro dele, em cada linha um comando. .gitignore na primeira lina e .Ricardo.txr na segunda linha que é o arquivo que eu não quero q seja visto. 
+
+Sempre que eu fizer uma alteração em algum aquivo eu tenho q dar dps um git add ... e aí depende do tipo do git add pq são vários(tem aí em cima).
+
+Posso commitar antes sem fazer o add? Pode:
+git add -a -m "Frase que eu quiser"
+Mas é melhor dar o add pra poder deixar ainda os arquivos na stage area.
+
+Como visualzar de forma mais detalhada as alterações.
+
+git diff : ele diz em "vermelho" o que foi removido do artigo e em "verde" o que foi adicionado.(É para qd o arquivo foi alterado, ele está no working directory (diretório de trabalho), mas que ainda não foi add pra sua stage área). Obs que se eu der um git add .(que add tudo e dps for dar novamente um git diff, não aparece nada, pois não há alterações e nao tem nda no diretório de trabalho).
+
+Para saber o que tem na stage área e que eu voi adicionar no próximo commit, vou ter que dar:
+git diff --staged
+Retona a msm coisa que deu no diff, antes de eu dar o add, mas aí qd eu dou o commit, então não aparece mais nda.
+
+git log - mostra um log de tds os commits que foram feitos, desde o início do seu projeto até agora. Nele tem uma parte que é commit e uma chave. Ela serve para vc referenciar o commit se vc quiser voltar aquela versão daquele commit. Aparece smp: msg, autor e qd foi feito o commit.
+
+git log -p - ordem cronológica dos commits e ainda o diff de cada um dos commits. Como é mta coisa que ele mostra(que chamamos de paginação), a gnt vê td descendo as linhas dando enter e no fim qd aparecer que acabou eu digito a letra "q" para dizer que quero voltar pro terminal.
+
+git log -p -n(no caso -1 pra trazer um único commit, -2 etc)
+
+gitk -  abre o visualizador de relatórios de alterações do git. É um relatório bem mais detalhado e gráfico.
+
+git log --pretty=oneline : mostra o código de cada commit e a msg desse commit, ou seja, sem mostrar autor , data etc.
+
+
+Commit feito antes da hr. Como desfazer?
+Por ex, eu editei o arquivo  readme que tá na minha pasta que criei : Git/Local, salvo e dps commito : git commit -a - m "Novas funcionalidades" e dps dou um git log --pretty=oneline que serve para mostrar só o cód e a msg de cada commit, sem a data, autor etc. Então, pra editar o ultimo commit que fiz. Agr eu edito outro arquivo cujo o nome é changelog, que tb está na mesma pasta e dps o add: git add . e então uso git commit --amend -m "Novas funcionalidades (edicao)", ou seja, posso mudar o nome do último commit feito. Qd eu faço git log --pretty=oneline, vejo que o commit foi mudado, ou seja não houve outro commit e sim uma mudança no último, e observo que a chave tb é mudada.
+
+Crio um arquivo novo chamado novo.php e dps o add, fazendo git add. Ele passa de vermelho para verde, ou seja, ele agr está na stage area, ou seja, ele está pronto para ser commitado, mas eu não quero o commitar, só quero que ele fique adicionado. Uso git reset HEAD novo.php. Logo qd uso o git status, vejo q o arquivo não está mais na stage área, ou seja, agr ele tá novamente vermelho.
+
+Lembrar o que eu fiz no arquivo. E eu quero reverter. Pego o aquivo do ex de cima e uso git add . e tb uso git commit -m "Novo arquivo de funcoes". Qd eu vou lá no arq e coloco, por ex funções dentro, e qd eu dou git status, então sim eu percebo que eu modifiquei o arquivo, mas eu não sei o q exatamente eu fiz, pois eu não lembro.  Então , se eu ler, qd eu dou o git status, fala lá git checkout -- <file>... to discard changes in working directory. Ou seja, git checkout -- nomeDoAquivo. No nosso caso é: git checkout -- novo.php. Logo o arq volta a ser como antes. Ou seja, ele apaga a última alteração feita no arq.
+
+APAGUEI o arq readme da pasta, apaguei qlq coisa que tinha escrito dentro do arq changelog.txt e ainda criei o arquivo index.php. Agr eu dou um git status e então vejo que tem algumas alterações.
+
+git  rm nomeDoArquivo - remove o arquivo. Por ex, eu o apaguei, mas qd dou um git status aparece lá delected arquivoTal. Um ex: git rm readme.txt.
+
+Tag = etiqueta. git tag -a "nome da tag" -m "mensagemQlq"
+git tag -a v1.0 -m "versao 1.0". Obs q o -a é pra criar uma tag anotada. Uma tag simplesnão guarda quem a criou, data, hr etc. Ela é só um ponteiro pro sistema. 
+Agr qd eu digito git tag ela mostra, no ex de cima, o nome da tag que é v1.0. A tag smp é criada no commit atual, ou seja, no local que vc está trabalhando agr com seu controle de versão.
+
+Mas eu posso criar uma tag com um commit antigo do meu sistema. Antes, só pra teste, use git log --pretty=oneline para ver tds os commits e tals. git tag -a v0.0(q foi o nome da tag do ex) umaChaveGigante(que eu copiei de uma tag lá do comando --pretty=oneline) -m "mesgQlq". No ex foi git tag -a v0.0 78kdfjkaijfijsljfla7387289789...(chava lá...) -m "versao 0.0". Criei minha tag. Pra vê-las, git tag: aparece v0.0 e v1.0.
+git show v0.0 - mostra os fetalhes da tag v0.0 por ex.
+
+Para usar a tag? git checkout v0.0(quero checar os arqs q tem na minha tag inicial). Isso faz a troca dos meus arquivos para aquela tag, ou seja, para aquele ponteiro daquele commit inicial. Se eu quiser pegar a v1.0, faço a mesma coisa git checkout v1.0.
+
+git checkout master - Para ele voltar ao padrao de como é o nosso sistema. git tag para checar as tags que tenho. Se eu quiser deletar uma tag faço:
+git tag -d NomeDatag. Ex: git tag -d v0.0
+
+tag é um ptr pra um ponto específico do sistema. 
+
+Branch permite que vc tabalhe comm várias ramificações , segmentações do teu sistema. Posso fazer um commit em uma ramificação e esse commit não vai altera a outra ramificação. Por padrão qd qd a gnt cria um repositório no git, é criado um branch de nome master. É o que aparece lá em cima no terminal "(master)".
+Crio um ambiente de teste pro meu sistema. O branch master é o que o cliente tá usando. O sist tá funcionando corretamente. Td ok. agr eu crio um ambiente de teste para o sistema. Para isso eu crio um branch. git branch teste(nome do branch é teste). git checkout teste. Isso faz a transição dos meus arquivos pro meu branch de teste, ou seja, coloco o meu worked directory no meu branch de teste.
+
+ou faço os dois comandos anteriores de uma só vez: git checkout -b teste.
+
+Dps disso é só eu trabalhar no meu ambiente de teste normalmente. Aí eu vou lá no meu arq novo.php e add uma função.E aí meu cliente me liga dizendo: deu um problema no meu sistema e eu preciso que tu altere tal coisa pra mim. É simples! Vejo lá o status : git status. Commito: git commit -a -m "nova funcao adicionada e testada".
